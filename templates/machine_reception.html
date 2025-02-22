@@ -1,0 +1,116 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <title>Document</title>
+</head>
+
+<body style="padding: 20px;">
+<h2 style="padding:10px">Machine Reception</h2>
+<div class="displaytabel">
+
+    <form id="search" class="search" method="post" action="/" style="width: 60%;">
+        {%csrf_token%}
+       
+        <input id="MN" type='text' name='MN' placeholder='MN'/>
+      
+        <input id="MRC" type='text' name='MRC' placeholder='MRC' />
+        
+        <input type="submit" value="Search"/>
+      </form>
+
+      <table class="table table-striped " >
+        <thead>
+          <tr>
+            <th scope="col">MN</th>
+            <th scope="col">Machine Number</th>
+            <th scope="col">Technicain Name</th>
+            <th scope="col">Shelf</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for machine in machine %}
+         
+          <tr>
+            <th scope="row">{{machine.MN}}</th>
+            <td>{{machine.MRC}}</td>
+            <td>{{machine.technician_name}}</td>
+            <td>{{machine.shelf}}</td>
+          </tr>
+          {%endfor%}
+        
+        
+        </tbody>
+      </table>
+
+</div>
+
+
+<!-- <script>
+
+$(document).ready(function() {
+  // Function to send AJAX request and update the table
+  function filterTable() {
+      // Get the values from the form inputs
+      var mn = $('#MN').val();
+      var mrc = $('#MRC').val();
+
+      // Send an AJAX request to the server
+      $.ajax({
+          url: "{% url '' %}", // Replace with your view URL
+          type: "POST",
+          data: {
+              'MN': mn,
+              'MRC': mrc,
+              'csrfmiddlewaretoken': '{{ csrf_token }}' // Include CSRF token
+          },
+          success: function(response) {
+              // Clear the existing table rows
+              $('#machine-table-body').empty();
+
+              // Append new rows with the filtered data
+              response.machine.forEach(function(machine) {
+                  $('#machine-table-body').append(
+                      `<tr>
+                          <th scope="row">${machine.MN}</th>
+                          <td>${machine.MRC}</td>
+                          <td>${machine.technician_name}</td>
+                          <td>${machine.shelf}</td>
+                      </tr>`
+                  );
+              });
+          },
+          error: function(xhr, status, error) {
+              console.error("AJAX Error: " + status + error);
+          }
+      });
+  }
+
+  // Attach an event listener to the input fields
+  $('#MN, #MRC').on('input', function() {
+      filterTable(); // Call the filter function on every keystroke
+  });
+});
+</script> -->
+
+
+</body>
+
+
+
+
+</html>
