@@ -1,5 +1,5 @@
 {% load static %}
-{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 
-
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
@@ -20,33 +20,32 @@
 </head>
 
 <body style="padding: 20px;">
-<h2 style="padding:10px">Machine Reception</h2>
+<h2 style="padding:5px">Machine Reception</h2>
 <div class="displaytabel">
 
-    <form id="search" class="search" method="post" action="/" style="width: 60%;">
+    <form id="search" class="search" method="post" action="/" style="width: 60%; padding-bottom: 10px;">
         {%csrf_token%}
        
-        <input id="MN" type='text' name='MN' placeholder='MN'/>
+        <input id="MN" type='text' name='MN' placeholder='MN' style="border: none; background-color: rgb(224, 224, 224); border-radius: 10px; padding-left: 8px;" />
       
-        <input id="MRC" type='text' name='MRC' placeholder='MRC' />
+        <input id="MRC" type='text' name='MRC' placeholder='MRC' style="border: none; background-color: rgb(224, 224, 224); border-radius: 10px; padding-left: 8px;"  />
         
-        <input type="submit" value="Search"/>
+        <!-- <input type="submit" value="Search"/> -->
       </form>
 
-      <table class="table table-striped " >
+      <table id="table" class="table table-striped  table-hover" >
         <thead>
           <tr>
-            <th scope="col">MN</th>
+            <th scope="col">ID</th>
             <th scope="col">Machine Number</th>
             <th scope="col">Technicain Name</th>
             <th scope="col">Shelf</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="tablebody">
           {%for machine in machine %}
-         
           <tr>
-            <th scope="row">{{machine.MN}}</th>
+            <td scope="row">{{machine.MN}}</td>
             <td>{{machine.MRC}}</td>
             <td>{{machine.technician_name}}</td>
             <td>{{machine.shelf}}</td>
@@ -60,7 +59,7 @@
 </div>
 
 
-<!-- <script>
+<script>
 
 $(document).ready(function() {
   // Function to send AJAX request and update the table
@@ -71,20 +70,20 @@ $(document).ready(function() {
 
       // Send an AJAX request to the server
       $.ajax({
-          url: "{% url '' %}", // Replace with your view URL
+          url: "{% url '' %}", 
           type: "POST",
           data: {
               'MN': mn,
               'MRC': mrc,
-              'csrfmiddlewaretoken': '{{ csrf_token }}' // Include CSRF token
+              'csrfmiddlewaretoken': '{{ csrf_token }}'
           },
           success: function(response) {
               // Clear the existing table rows
-              $('#machine-table-body').empty();
+               $('#tablebody').empty();
 
               // Append new rows with the filtered data
               response.machine.forEach(function(machine) {
-                  $('#machine-table-body').append(
+                  $('#tablebody').append(
                       `<tr>
                           <th scope="row">${machine.MN}</th>
                           <td>${machine.MRC}</td>
@@ -98,6 +97,9 @@ $(document).ready(function() {
               console.error("AJAX Error: " + status + error);
           }
       });
+
+      console.log('The quick brown fox jumpign'+mn)
+      
   }
 
   // Attach an event listener to the input fields
@@ -105,7 +107,7 @@ $(document).ready(function() {
       filterTable(); // Call the filter function on every keystroke
   });
 });
-</script> -->
+</script>
 
 
 </body>
