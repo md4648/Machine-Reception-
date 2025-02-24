@@ -33,11 +33,11 @@ def machine_reception(request):
                   response=HttpResponse(content_type='text/csv')
                   response['Content-Disposition']='attachment; filename="machine_reception.csv"'
                   writer=csv.writer(response)
-                  writer.writerow(['Machine Number','Technicain Name','SHELF'])
+                  writer.writerow(['MN','Machine Number','Technicain Name','SHELF'])
                   # instance=queryset   
                   print('The quick grronw fos ',type(response))
                   for machine in queryset:# use instance variable to export entire datas
-                        writer.writerow([machine.MRC,machine.technician_name,machine.shelf])
+                        writer.writerow([machine.MN,machine.MRC,machine.technician_name,machine.shelf])
                   return response
 
             
